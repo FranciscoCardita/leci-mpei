@@ -57,7 +57,44 @@ umRapaz = sum(lancamentos) >= 1;
 outroRapaz = sum(lancamentos) >= 2;
 probSim = outroRapaz / umRapaz
 
-%% func
-function prob1 = probA(p,k,n)
-    prob1 = nchoosek(n,k)*p^k*(1-p)^(n-k);
+%% Ex2a
+N = 1e5; p = 0.5; n = 20; m = 100;
+
+matrix = randi(m,n,N);
+oneOrLess = 0;
+for k = 1 : N
+    uniqueVal = unique(matrix(:,k));
+    if length(uniqueVal) == 20
+        oneOrLess = oneOrLess + 1;
+    end
 end
+probSim = oneOrLess/N
+
+%% Ex2b
+N = 1e5; p = 0.5; n = 20; m = 100;
+
+matrix = randi(m,n,N);
+oneOrMore = 0;
+for k = 1 : N
+    uniqueVal = unique(matrix(:,k));
+    if length(uniqueVal) < 20
+        oneOrMore = oneOrMore + 1;
+    end
+end
+probSim = oneOrMore/N
+
+%% Ex2c
+N = 1e5; p = 0.5; n = linspace(10,100,10); probSim = zeros(1,10);
+
+for i = 1 : 10
+    matrix = randi(1000,n(i),N);
+    oneOrMore = 0;
+    for j = 1 : N
+        if length(unique(matrix(:,j))) ~= n(i)
+            oneOrMore = oneOrMore + 1;
+        end
+    end
+    probSim(i) = oneOrMore/N;
+end
+subplot(1,2,1)
+plot(n*10,probSim)
