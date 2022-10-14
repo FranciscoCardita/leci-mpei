@@ -60,11 +60,9 @@ probSim = outroRapaz / umRapaz
 %% Ex2a
 N = 1e5; p = 0.5; n = 20; m = 100;
 
-matrix = randi(m,n,N);
 oneOrLess = 0;
-for k = 1 : N
-    uniqueVal = unique(matrix(:,k));
-    if length(uniqueVal) == 20
+for matrix = randi(m,n,N)
+    if length(unique(matrix)) == n
         oneOrLess = oneOrLess + 1;
     end
 end
@@ -73,28 +71,28 @@ probSim = oneOrLess/N
 %% Ex2b
 N = 1e5; p = 0.5; n = 20; m = 100;
 
-matrix = randi(m,n,N);
-oneOrMore = 0;
-for k = 1 : N
-    uniqueVal = unique(matrix(:,k));
-    if length(uniqueVal) < 20
-        oneOrMore = oneOrMore + 1;
+twoOrMore = 0;
+for matrix = randi(m,n,N)
+    if length(unique(matrix)) < n-1
+        twoOrMore = twoOrMore + 1;
     end
 end
-probSim = oneOrMore/N
+probSim = twoOrMore/N
 
 %% Ex2c
 N = 1e5; p = 0.5; n = linspace(10,100,10); probSim = zeros(1,10);
+m = [1000 100000];
 
-for i = 1 : 10
-    matrix = randi(1000,n(i),N);
-    oneOrMore = 0;
-    for j = 1 : N
-        if length(unique(matrix(:,j))) ~= n(i)
-            oneOrMore = oneOrMore + 1;
+for i = 1 : 2
+    for j = 1 : length(n)
+        cnt = 0;
+        for matrix = randi(m(i),n(j),N)
+            if length(unique(matrix)) < n(j)-1
+                cnt = cnt + 1;
+            end
         end
+        probSim(j) = cnt/N;
     end
-    probSim(i) = oneOrMore/N;
+    subplot(2,1,i)
+    plot(n,probSim)
 end
-subplot(1,2,1)
-plot(n*10,probSim)
