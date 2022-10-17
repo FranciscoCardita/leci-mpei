@@ -80,7 +80,7 @@ end
 probSim = twoOrMore/N
 
 %% Ex2c
-N = 1e5; p = 0.5; n = linspace(10,100,10); probSim = zeros(1,10);
+N = 1e5; n = linspace(10,100,10); probSim = zeros(1,10);
 m = [1000 100000];
 
 for i = 1 : 2
@@ -96,3 +96,58 @@ for i = 1 : 2
     subplot(2,1,i)
     plot(n,probSim)
 end
+
+%% Ex2d
+N = 1e5; n = 100;
+m = [200 500 1000 2000 5000 10000 20000 50000 100000];
+
+for i = 1 : length(m)
+    cnt = 0;
+    for matrix = randi(m(i),n,N)
+        if length(unique(matrix)) < n-1
+            cnt = cnt + 1;
+        end
+    end
+    probSim(i) = cnt/N;
+end
+plot(m,probSim)
+
+%% Ex3a
+N = 1e5; T = 1000; k = 10;
+
+cnt = 0;
+for matrix = randi(T,k,N)
+    if length(unique(matrix)) < k-1
+        cnt = cnt + 1;
+    end
+end
+probSim = cnt/N
+
+%% Ex3b
+N = 1e5; T = 1000; k = 10:100:1000;
+
+for i = 1 : length(k)
+    cnt = 0;
+    for matrix = randi(T,k(i),N)
+        if length(unique(matrix)) < k(i)-1
+            cnt = cnt + 1;
+        end
+    end
+    probSim(i) = cnt/N;
+end
+
+plot(k,probSim)
+
+%% Ex3c
+N = 1e5; k = 50; T = 100:100:1000;
+
+for i = 1 : length(T)
+    cnt = 0;
+    for matrix = randi(T(i),k,N)
+        if length(unique(matrix)) == k
+            cnt = cnt + 1;
+        end
+    end
+    probSim(i) = cnt/N;
+end
+plot(T,probSim)
