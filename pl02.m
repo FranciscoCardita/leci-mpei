@@ -151,3 +151,38 @@ for i = 1 : length(T)
     probSim(i) = cnt/N;
 end
 plot(T,probSim)
+
+%% Ex4a
+N = 1e5; y = 365; p = 0.5;
+
+for n = 1 : 40
+    cnt = 0;
+    for matrix = randi(365,n,N)
+        if length(unique(matrix)) ~= n
+            cnt = cnt + 1;
+        end
+    end
+    p = cnt/N;
+    if p > 0.5
+        break;
+    end
+end
+n
+
+%% Ex4b
+
+N = 1e5; y = 365; p = 0.5;
+
+for n = 20 : 100
+    cnt = 0;
+    for matrix = randi(365,n,N)
+        if length(unique(matrix)) ~= n
+            cnt = cnt + 1;
+        end
+    end
+    p = cnt/N;
+    if p > 0.9
+        break;
+    end
+end
+n
