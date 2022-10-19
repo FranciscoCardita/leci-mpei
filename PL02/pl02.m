@@ -186,3 +186,22 @@ for n = 20 : 100
     end
 end
 n
+
+%% Ex7
+
+% P(carlos | erro) = P(carlos & erro) / P(erro)
+% P(carlos & erro) = P(erro | carlos) * P(carlos)
+pCarlosErro = 0.001 * 0.5;
+
+% P(erro) = P(erro | carlos) * P(carlos) + P(erro | andre) * P(andre) +
+% P(erro | bruno) * P(bruno)
+pErro = 0.01*0.2 + 0.05*0.3 + 0.001*0.5;
+
+pCarlos = pCarlosErro/pErro
+
+% b)
+pAndreErro = 0.01 * 0.2;
+pAndre = pAndreErro/pErro
+
+pBrunoErro = 0.05 * 0.3;
+pBruno = pBrunoErro/pErro
