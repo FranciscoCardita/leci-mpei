@@ -153,11 +153,11 @@ end
 plot(T,probSim)
 
 %% Ex4a
-N = 1e5; y = 365; p = 0.5;
+N = 1e5; y = 365;
 
 for n = 1 : 40
     cnt = 0;
-    for matrix = randi(365,n,N)
+    for matrix = randi(y,n,N)
         if length(unique(matrix)) ~= n
             cnt = cnt + 1;
         end
