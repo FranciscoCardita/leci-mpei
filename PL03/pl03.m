@@ -65,5 +65,29 @@ for i = 1 : length(tr)
     res(i) = prob(20);
 end
 
-fprintf("%.5f\n", res*100);
+fprintf("%.5f%% \n", res*100);
 
+%% Ex4
+p = 0.4; q = 0.6;
+T = [p^2 0 0 q^2
+     (1-p)^2 0 0 q*(1-q)
+     p*(1-p) 0 0 q*(1-q)
+     p*(1-p) 1 1 (1-q)^2];
+v = zeros(4,1);
+v(1) = 1;
+tr = [5 10 100 200];
+res = zeros(4, 4);
+for i = 1 : length(tr)
+    for j = 1 : 4
+        prob = T^tr(i) * v;
+        res(i, j) = prob(i);
+    end
+end
+
+res
+
+%% Ex5ab
+T = [0.7 0.2 0.3
+     0.2 0.3 0.3
+     0.1 0.5 0.4];
+v = [1; 0; 0];
