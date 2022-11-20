@@ -101,7 +101,7 @@ T = [0.7 0.2 0.3
      0.1 0.5 0.4];
 v0 = [1; 0; 0];
 
-v1 = (T * v); % primeira transição
+v1 = (T * v0); % primeira transição
 prob1 = sum(v1(1:2));
 v1(3) = 0;
 v1 = v1/sum(v1(1:2));
@@ -110,3 +110,40 @@ v2 = T * v1;
 prob2 = sum(v2(1:2));
 
 res = prob1 * prob2
+
+%% Ex5d
+T = [0.7 0.2 0.3
+     0.2 0.3 0.3
+     0.1 0.5 0.4];
+v0 = [1; 0; 0];
+
+v1 = T^30 * v0;
+
+sunny = round(v1(1)*31)
+cloudy = round(v1(2)*31)
+rainy = round(v1(3)*31)
+
+%% Ex5e
+T = [0.7 0.2 0.3
+     0.2 0.3 0.3
+     0.1 0.5 0.4];
+v0 = [0; 0; 1];
+
+v1 = T^30 * v0;
+
+sunny = round(v1(1)*31)
+cloudy = round(v1(2)*31)
+rainy = round(v1(3)*31)
+
+%% Ex5f
+T = [0.7 0.2 0.3
+     0.2 0.3 0.3
+     0.1 0.5 0.4];
+p = [0.1; 0.3; 0.5];
+
+% primeiro dia sol
+v0 = [1; 0; 0];
+v1 = T^30 * v0;
+
+days = round((v1 * 31) .* p);
+res = sum(days)
