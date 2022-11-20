@@ -99,4 +99,14 @@ prob(1)^2
 T = [0.7 0.2 0.3
      0.2 0.3 0.3
      0.1 0.5 0.4];
+v0 = [1; 0; 0];
 
+v1 = (T * v); % primeira transição
+prob1 = sum(v1(1:2));
+v1(3) = 0;
+v1 = v1/sum(v1(1:2));
+
+v2 = T * v1;
+prob2 = sum(v2(1:2));
+
+res = prob1 * prob2
