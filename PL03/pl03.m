@@ -147,3 +147,46 @@ v1 = T^30 * v0;
 
 days = round((v1 * 31) .* p);
 res = sum(days)
+
+%% Ex6ab
+T = [.8 0 0 .3 0
+     .2 .6 0 .2 0
+     0 .3 1 0 0
+     0 .1 0 .4 0
+     0 0 0 .1 1];
+v0 = zeros(1,5)';
+v0(1) = 1;
+n = 100;
+
+probs = [n];
+for i = 1 : n
+    v1 = T^i * v0;
+    probs(i) = v1(2);
+end
+stem(probs)
+
+%% Ex6c
+T = [.8 0 0 .3 0
+     .2 .6 0 .2 0
+     0 .3 1 0 0
+     0 .1 0 .4 0
+     0 0 0 .1 1];
+v0 = zeros(1,5)';
+v0(1) = 1;
+n = 100;
+
+probs = [n];
+for i = 1 : n
+    v1 = T^i * v0;
+    probs(i) = v1(3);
+end
+hold on
+stem(probs)
+
+probs = [n];
+for i = 1 : n
+    v1 = T^i * v0;
+    probs(i) = v1(5);
+end
+stem(probs)
+legend('State 3', 'State 5')
