@@ -2,23 +2,37 @@ clc
 clear all
 close all
 
-%% Ex1
-function keys = hash(N, imin, imax, chars, probs)
-    if nargin() < 5
-        probs = ones(1,length(chars));
-        probs = probs./sum(probs);
-    end
-    for i = 1 : N
-       for j = 1 : randi([imin, imax])
-       end
-    end
-end
+%% Ex1a
+N = 1e5;
+imin = 6;
+imax = 20;
+chars = ['a':'z' 'A':'Z'];
 
-function state = discrete_rnd(states, probVector)
-    U = rand();
-    i = 1 + sum(U > cumsum(probVector));
-    state = states(i);
-end
+keyGen(N, imin, imax, chars)
 
-% Ex1a
-% chars = ['a':'z' 'A':'Z']
+%% Ex1b
+N = 1e5;
+imin = 6;
+imax = 20;
+chars = 'a':'z';
+probs = load("prob_pt.txt");
+
+keyGen(N, imin, imax, chars, probs)
+
+%% Ex2
+N = 1e5;
+imin = 6;
+imax = 20;
+chars = ['a':'z' 'A':'Z'];
+
+keys = keyGen(N, imin, imax, chars);
+sizes = [5e5 1e6 2e6];
+
+[sim1, sim2, sim3, sim4] = deal(cell(3));
+
+for i = 1 : length(sizes)
+    hashcodes = zeros(1, length(keys));
+    
+    collisions = 0;
+    tic
+end
