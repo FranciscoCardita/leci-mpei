@@ -1,3 +1,3 @@
 function bloom = initBloom(n)
-    filter = zeros(1, n);
+    bloom = zeros(1, n);
 end

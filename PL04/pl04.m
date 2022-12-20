@@ -225,3 +225,67 @@ plot(sizes, [sim4{:, 3}])
 
 title('Execution time')
 legend('djb2', 'sdbm', 'hashstring', 'DJB31MA')
+
+%% ------ 4.2 ------
+% Ex1
+n = 8000;
+k = 3;
+file = readlines('wordlist-preao-20201103.txt');
+U1 = file(1:1000);
+
+bloomFilter = initBloom(n);
+
+seeds = randi(2^32, k);
+for i = 1 : length(U1)
+    bloomFilter = insert(bloomFilter, convertStringsToChars(U1(i)), k, seeds);
+end
+
+% Ex2
+bool = zeros(1, length(U1));
+for i = 1 : length(U1)
+    bool(i) = exists(bloomFilter, convertStringsToChars(U1(i)), k, seeds);
+end
+fprintf('False negatives: %.2f%%\n', length(find(bool==0))*100/length(bool))
+
+% Ex3
+U2 = file(1001:11001);
+bools = zeros(1, length(U2));
+for i = 1 : length(U2)
+    bools(i) = exists(bloomFilter, convertStringsToChars(U2(i)), k, seeds);
+end
+fprintf('False negatives: %.2f%%\n', length(find(bools==0))*100/length(bools))
+
+% Ex4
+m = length(U1);
+fprintf('Practical: %.2f%%\n', length(find(bool==0))*100/length(bool))
+fprintf('Theoretical: %.2f%%\n', (1-exp(-(k*m)/n))^k*100)
+
+%% Ex5
+n = 8000;
+k = 4:10;
+file = readlines('wordlist-preao-20201103.txt');
+U1 = file(1:1000);
+falsePositives = zeros(1, 7);
+for i = 1 : 7
+    bloomFilter = initBloom(n);
+    
+    seeds = randi(2^32, k(i));
+    for j = 1 : length(U1)
+        bloomFilter = insert(bloomFilter, convertStringsToChars(U1(j)), k(i), seeds);
+    end
+
+    U2 = file(1001:11001);
+    bools = zeros(1, length(U2));
+    for j = 1 : length(U2)
+        bools(j) = exists(bloomFilter, convertStringsToChars(U2(j)), k(i), seeds);
+    end
+
+    falsePositives(i) = length(find(bools))/length(bools);
+
+end
+
+plot(k, falsePositives)
+
+m = length(U1);
+fprintf('Practical: %.2f%%\n', k(find(falsePositives==min(falsePositives))))
+fprintf('Theoretical: %.2f%%\n', (n*log(2))/m)
